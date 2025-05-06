@@ -6,6 +6,8 @@ import {
 } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ProjectDetailIllustration } from './components/ProjectIllustration';
+import { MessageSquare, X } from 'lucide-react';
+import LocalChatInterface from './components/LocalChatInterface';
 
 // Translation strings
 const translations = {
@@ -20,6 +22,7 @@ const translations = {
     about_text: "I am pursuing a degree in Computer Engineering at the University of Arkansas. Currently, I work as a Course Assistant, where my role is crucial in enhancing the academic experience through diligent administrative support and participation in departmental projects. Our team at the University of Arkansas supports the First Year Engineering program by providing comprehensive assistance and facilitating communication between students and faculty.",
     contact_text: "You can access to my socials or download my resume on the left sidebar. Drop any questions or inquiries you may have on the box below, make sure to include the right information and I will get back as soon as I can.",
     work_button: "Check out some of my work",
+    skills_title: "Skills & Technologies",
     your_name: "Your name:",
     your_email: "Your Email:",
     your_message: "Your Message:",
@@ -48,6 +51,7 @@ const translations = {
     about_text: "Estoy cursando un título en Ingeniería Informática en la Universidad de Arkansas, que espero completar en 2025. Actualmente, trabajo como Asistente de Curso, donde mi papel es crucial para mejorar la experiencia académica a través del apoyo administrativo diligente y la participación en proyectos departamentales. Nuestro equipo en la Universidad de Arkansas apoya el programa de Ingeniería de Primer Año proporcionando asistencia integral y facilitando la comunicación entre estudiantes y profesores.",
     contact_text: "Puedes acceder a mis redes sociales o descargar mi currículum en la barra lateral izquierda. Deja cualquier pregunta o consulta que tengas en el cuadro de abajo, asegúrate de incluir la información correcta y te responderé tan pronto como pueda.",
     work_button: "Mira algunos de mis trabajos",
+    skills_title: "Habilidades y Tecnologías",
     your_name: "Tu nombre:",
     your_email: "Tu Email:",
     your_message: "Tu Mensaje:",
@@ -222,13 +226,12 @@ export default function Portfolio() {
     message: '',
     file: null
   });
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-  const [sidebarHovered, setSidebarHovered] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedTech, setSelectedTech] = useState('');
   const [sidebarVisible, setSidebarVisible] = useState(false);
   const [sidebarPinned, setSidebarPinned] = useState(false);
+  const [isChatOpen, setIsChatOpen] = useState(false);
   
   // Get translation based on selected language
   const t = translations[language];
@@ -339,7 +342,7 @@ export default function Portfolio() {
     .filter(Boolean)
     .sort((a, b) => b.score - a.score);
 
-  // Sidebar open/close handlers
+  // Optimized sidebar handlers
   const handleSidebarMouseEnter = () => {
     if (!sidebarPinned) setSidebarVisible(true);
   };
@@ -347,8 +350,13 @@ export default function Portfolio() {
     if (!sidebarPinned) setSidebarVisible(false);
   };
   const handleSidebarToggle = () => {
-    setSidebarPinned(!sidebarPinned);
-    setSidebarVisible(!sidebarPinned ? true : false);
+    if (sidebarVisible || sidebarPinned) {
+      setSidebarPinned(false);
+      setSidebarVisible(false);
+    } else {
+      setSidebarPinned(true);
+      setSidebarVisible(true);
+    }
   };
 
   return (
@@ -369,128 +377,108 @@ export default function Portfolio() {
         {language === 'en' ? 'ES' : 'EN'}
       </button>
 
-      {/* Add a fixed open sidebar button for desktop (hamburger) */}
-      {!sidebarVisible && !sidebarPinned && (
-        <button
-          className="hidden md:flex fixed top-4 left-2 z-50 bg-gradient-to-r from-[#9D2235] to-[#C8102E] text-white p-3 rounded-full shadow-lg transition-opacity duration-300"
-          onClick={handleSidebarToggle}
-          aria-label="Open sidebar"
-          style={{ opacity: sidebarVisible ? 0 : 1 }}
-        >
-          <FaBars className="w-5 h-5" />
-        </button>
-      )}
+      {/* Add a floating sidebar toggle button (hamburger/close) always visible at top-left */}
+      <motion.button
+        className="fixed top-4 left-4 z-50 bg-gradient-to-r from-[#9D2235] to-[#C8102E] text-white p-3 rounded-full shadow-lg"
+        onClick={handleSidebarToggle}
+        aria-label={sidebarVisible || sidebarPinned ? 'Close sidebar' : 'Open sidebar'}
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.95 }}
+      >
+        {sidebarVisible || sidebarPinned ? <FaTimes className="w-5 h-5" /> : <FaBars className="w-5 h-5" />}
+      </motion.button>
 
       {/* Sidebar Navigation */}
       <motion.aside
         onMouseEnter={handleSidebarMouseEnter}
         onMouseLeave={handleSidebarMouseLeave}
+        initial={false}
         animate={{
-          width: sidebarVisible || sidebarPinned ? (sidebarCollapsed ? 56 : (sidebarHovered ? 260 : 200)) : 0,
-          opacity: sidebarVisible || sidebarPinned ? 1 : 0,
-          pointerEvents: sidebarVisible || sidebarPinned ? 'auto' : 'none',
+          width: sidebarVisible || sidebarPinned ? '16rem' : '0rem',
+          opacity: sidebarVisible || sidebarPinned ? 1 : 0
         }}
-        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-        className={`sticky top-0 h-screen hidden md:flex flex-col shadow-lg z-40 bg-white dark:bg-black text-black dark:text-white transition-all duration-300 ${sidebarCollapsed ? 'w-14' : 'w-64'} group`}
-        style={{ width: sidebarVisible || sidebarPinned ? (sidebarCollapsed ? 56 : (sidebarHovered ? 260 : 200)) : 0 }}
+        transition={{ type: 'spring', stiffness: 300, damping: 30, mass: 1 }}
+        className={`fixed top-0 left-0 h-screen flex flex-col shadow-lg z-40 bg-white dark:bg-black text-black dark:text-white overflow-hidden`}
+        style={{ willChange: 'width, opacity' }}
       >
-        {/* Collapse/Expand Button */}
-        {sidebarVisible || sidebarPinned ? (
-          <button
-            className="absolute top-4 right-2 z-50 p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-800"
-            onClick={handleSidebarToggle}
-            aria-label="Toggle sidebar"
-          >
-            {sidebarCollapsed ? <FaBars /> : <FaTimes />}
-          </button>
-        ) : null}
-        {/* Sidebar Content: Only show if visible or pinned */}
-        {(sidebarVisible || sidebarPinned) && (
-          <>
-            {/* Profile Section */}
-            <div className="flex flex-col items-center py-6 border-b border-gray-200 dark:border-gray-700">
-              <div className="w-16 h-16 rounded-full overflow-hidden mb-2 flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #9D2235 0%, #C8102E 100%)' }}>
-                <img
-                  src={process.env.PUBLIC_URL + '/images/avatar.png'}
-                  alt="Angel L. Pinzon"
-                  className="w-14 h-14 object-contain object-center rounded-full shadow-lg transition-transform duration-300 hover:scale-105 bg-white"
-                />
-              </div>
-              {!sidebarCollapsed && (
-                <>
-                  <h1 className="text-lg font-bold text-center text-black dark:text-white">Angel L. Pinzon</h1>
-                  <p className="text-xs text-gray-500 dark:text-gray-300">Computer Engineer</p>
-                </>
-              )}
+        <div className="w-64">
+          {/* Profile Section */}
+          <div className="flex flex-col items-center py-6 border-b border-gray-200 dark:border-gray-700">
+            <div className="w-16 h-16 rounded-full overflow-hidden mb-2 flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #9D2235 0%, #C8102E 100%)' }}>
+              <img
+                src={process.env.PUBLIC_URL + '/images/avatar.png'}
+                alt="Angel L. Pinzon"
+                className="w-14 h-14 object-contain object-center rounded-full shadow-lg transition-transform duration-300 hover:scale-105 bg-white"
+              />
             </div>
-            {/* Search Bar */}
-            {!sidebarCollapsed && (
-              <div className="px-4 py-3">
-                <input
-                  type="text"
-                  placeholder="Search projects..."
-                  value={searchTerm}
-                  onChange={e => { setSearchTerm(e.target.value); setActiveSection('portfolio'); }}
-                  className="w-full px-3 py-2 rounded bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#C8102E]"
-                />
-              </div>
-            )}
-            {/* Navigation Links */}
-            <nav className="flex-1 mt-2">
-              <div className="space-y-1 px-2">
-                {navItems.map((item) => (
-                  <button
-                    key={item.id}
-                    onClick={() => {setActiveSection(item.id); setIsNavOpen(false);}}
-                    className={`w-full flex items-center p-3 rounded-lg transition-colors duration-200 ${
-                      activeSection === item.id 
-                        ? 'bg-gradient-to-r ' + razorbackGradient + ' text-white' 
-                        : 'hover:bg-gray-200 dark:hover:bg-gray-800 text-black dark:text-white'
-                    }`}
-                    title={sidebarCollapsed ? item.label : undefined}
-                  >
-                    {item.icon}
-                    {!sidebarCollapsed && <span className="ml-3">{item.label}</span>}
-                  </button>
-                ))}
-              </div>
-            </nav>
-            {/* Dropdown Categories */}
-            {!sidebarCollapsed && (
-              <div className="px-4 py-2">
-                <div className="font-semibold mb-2">Categories</div>
-                <div className="space-y-1">
-                  {categories.map(cat => (
-                    <button
-                      key={cat.key}
-                      className={`w-full flex items-center px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 text-left ${selectedCategory === cat.name ? 'bg-gradient-to-r ' + razorbackGradient + ' text-white' : ''}`}
-                      onClick={() => { setSelectedCategory(cat.name); setSelectedTech(''); }}
-                    >
-                      <span className="flex-1">{cat.name}</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-            {/* Social Links & Options */}
-            <div className="space-y-2 mt-auto pt-4 pb-6 border-t border-gray-200 dark:border-gray-700 px-4">
-              <div className="flex space-x-2 justify-center">
-                <a href="https://www.linkedin.com/in/angel-l-pinzon-6715852a0/" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800" target="_blank" rel="noopener noreferrer" title={sidebarCollapsed ? 'LinkedIn' : undefined}><FaLinkedin /></a>
-                <a href="https://github.com/AngelP17" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800" target="_blank" rel="noopener noreferrer" title={sidebarCollapsed ? 'GitHub' : undefined}><FaGithub /></a>
-                <a href="mailto:angelpinzon1706@gmail.com" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800" title={sidebarCollapsed ? 'Email' : undefined}><FaEnvelope /></a>
-                <a href="resume.pdf" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800" download title={sidebarCollapsed ? 'Download Resume' : undefined}><FaDownload /></a>
-              </div>
-              <div className="flex space-x-2 mt-2 justify-center">
-                <button onClick={toggleDarkMode} className={`p-2 rounded ${isDarkMode ? razorbackSolid + ' text-white' : 'bg-gray-200 text-black'}`} aria-label="Toggle dark mode">{isDarkMode ? <FaSun /> : <FaMoon />}</button>
-                <button onClick={toggleLanguage} className={`p-2 rounded ${razorbackSolid} text-white`} aria-label="Toggle language">{language === 'en' ? 'ES' : 'EN'}</button>
-              </div>
+            <h1 className="text-lg font-bold text-center text-black dark:text-white">Angel L. Pinzon</h1>
+            <p className="text-xs text-gray-500 dark:text-gray-300">Computer Engineer</p>
+          </div>
+          {/* Search Bar */}
+          <div className="px-4 py-3">
+            <input
+              type="text"
+              placeholder="Search projects..."
+              value={searchTerm}
+              onChange={e => { setSearchTerm(e.target.value); setActiveSection('portfolio'); }}
+              className="w-full px-3 py-2 rounded bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#C8102E]"
+            />
+          </div>
+          {/* Navigation Links */}
+          <nav className="flex-1 mt-2">
+            <div className="space-y-1 px-2">
+              {navItems.map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => {setActiveSection(item.id); setIsNavOpen(false);}}
+                  className={`w-full flex items-center p-3 rounded-lg transition-colors duration-200 ${
+                    activeSection === item.id 
+                      ? 'bg-gradient-to-r ' + razorbackGradient + ' text-white' 
+                      : 'hover:bg-gray-200 dark:hover:bg-gray-800 text-black dark:text-white'
+                  }`}
+                >
+                  {item.icon}
+                  <span className="ml-3">{item.label}</span>
+                </button>
+              ))}
             </div>
-          </>
-        )}
+          </nav>
+          {/* Dropdown Categories */}
+          <div className="px-4 py-2">
+            <div className="font-semibold mb-2">Categories</div>
+            <div className="space-y-1">
+              {categories.map(cat => (
+                <button
+                  key={cat.key}
+                  className={`w-full flex items-center px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 text-left ${selectedCategory === cat.name ? 'bg-gradient-to-r ' + razorbackGradient + ' text-white' : ''}`}
+                  onClick={() => { setSelectedCategory(cat.name); setSelectedTech(''); }}
+                >
+                  <span className="flex-1">{cat.name}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+          {/* Social Links & Options */}
+          <div className="space-y-2 mt-auto pt-4 pb-6 border-t border-gray-200 dark:border-gray-700 px-4">
+            <div className="flex space-x-2 justify-center">
+              <a href="https://www.linkedin.com/in/angel-l-pinzon-6715852a0/" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800" target="_blank" rel="noopener noreferrer"><FaLinkedin /></a>
+              <a href="https://github.com/AngelP17" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800" target="_blank" rel="noopener noreferrer"><FaGithub /></a>
+              <a href="mailto:angelpinzon1706@gmail.com" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800"><FaEnvelope /></a>
+              <a href="resume.pdf" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800" download><FaDownload /></a>
+            </div>
+            <div className="flex space-x-2 mt-2 justify-center">
+              <button onClick={toggleDarkMode} className={`p-2 rounded ${isDarkMode ? razorbackSolid + ' text-white' : 'bg-gray-200 text-black'}`} aria-label="Toggle dark mode">{isDarkMode ? <FaSun /> : <FaMoon />}</button>
+              <button onClick={toggleLanguage} className={`p-2 rounded ${razorbackSolid} text-white`} aria-label="Toggle language">{language === 'en' ? 'ES' : 'EN'}</button>
+            </div>
+          </div>
+        </div>
       </motion.aside>
 
       {/* Main Content Area */}
-      <main className="flex-1 bg-white dark:bg-black text-black dark:text-white transition-colors duration-300 pb-12">
+      <main className={`flex-1 bg-white dark:bg-black text-black dark:text-white transition-colors duration-300 pb-12 ${sidebarVisible || sidebarPinned ? 'md:ml-64' : 'ml-0'}`}>
         {/* Overlay for mobile nav */}
         {isNavOpen && (
           <div 
@@ -537,14 +525,14 @@ export default function Portfolio() {
                   />
                 </div>
                 <h1 className="text-5xl font-bold mb-2 text-black dark:text-[#C8102E] drop-shadow-lg">Angel L. Pinzon</h1>
-                <h2 className="text-2xl md:text-3xl font-semibold mb-4 text-gray-800 dark:text-white drop-shadow">Computer Engineer</h2>
+                <h2 className="text-2xl md:text-3xl font-semibold mb-4 text-gray-800 dark:text-white drop-shadow">{t.welcome}</h2>
                 <motion.p
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5, duration: 0.7 }}
                   className="text-lg md:text-xl mb-8 text-gray-700 dark:text-gray-200"
                 >
-                  Specializing in web development, cloud computing, and data analytics.
+                  {t.subhead}
                 </motion.p>
                 {/* Social Links */}
                 <motion.div
@@ -575,7 +563,7 @@ export default function Portfolio() {
                       onClick={() => setActiveSection('portfolio')}
                       className="px-8 py-3 bg-gradient-to-r from-[#9D2235] to-[#C8102E] dark:from-[#23272f] dark:to-[#C8102E] rounded-full hover:from-[#C8102E] hover:to-[#9D2235] dark:hover:from-[#C8102E] dark:hover:to-[#23272f] transition-colors duration-300 font-semibold text-lg shadow-lg transform hover:scale-105 text-white dark:text-white"
                     >
-                      Check out my work <FaArrowRight className="inline ml-2" />
+                      {t.work_button} <FaArrowRight className="inline ml-2" />
                     </motion.button>
                   </div>
                 </motion.div>
@@ -588,7 +576,7 @@ export default function Portfolio() {
                 className="mt-8 flex justify-center"
               >
                 <div className="bg-white dark:bg-black rounded-2xl shadow-lg px-8 py-4 transition-colors duration-300 w-full max-w-2xl">
-                  <h3 className="text-2xl font-bold text-black dark:text-[#C8102E] mb-4 text-center">Skills & Technologies</h3>
+                  <h3 className="text-2xl font-bold text-black dark:text-[#C8102E] mb-4 text-center">{t.skills_title}</h3>
                   <div className="flex flex-wrap justify-center gap-3">
                     {skills.map((skill, idx) => (
                       <span key={idx} className="bg-[#C8102E] dark:bg-[#23272f] text-white dark:text-[#C8102E] px-4 py-2 rounded-full text-sm font-medium shadow border border-transparent dark:border-[#C8102E] transition-colors duration-200">
@@ -953,6 +941,31 @@ export default function Portfolio() {
           </motion.section>
         )}
         </AnimatePresence>
+
+        {/* Floating Chat Button */}
+        <button
+          onClick={() => setIsChatOpen(true)}
+          className="fixed bottom-5 right-5 w-14 h-14 rounded-full bg-gradient-to-r from-purple-500 to-red-500 text-white shadow-lg flex items-center justify-center hover:shadow-xl transition-all duration-300 z-50"
+          aria-label="Open chat assistant"
+        >
+          <MessageSquare className="w-6 h-6" />
+        </button>
+
+        {/* Chat Modal */}
+        {isChatOpen && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div className="w-full max-w-2xl relative">
+              <button
+                onClick={() => setIsChatOpen(false)}
+                className="absolute -top-12 right-0 text-white hover:text-gray-300 transition-colors"
+                aria-label="Close chat"
+              >
+                <X className="w-6 h-6" />
+              </button>
+              <LocalChatInterface />
+            </div>
+          </div>
+        )}
       </main>
     </div>
   );
