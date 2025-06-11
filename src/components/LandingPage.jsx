@@ -183,9 +183,9 @@ const LandingPage = () => {
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.4, type: 'spring' }}
-              className="w-32 h-32 rounded-full border-4 border-white overflow-hidden mx-auto mb-4 shadow-lg"
+              className="w-32 h-32 rounded-full overflow-hidden mx-auto mb-4 shadow-lg avatar-ring"
             >
-              <img src="/api/placeholder/150/150" alt="Angel L. Pinzon" className="w-full h-full object-cover" />
+              <img src={process.env.PUBLIC_URL + '/images/me.jpg'} alt="Angel L. Pinzon" className="w-full h-full object-cover rounded-full" />
             </motion.div>
             <motion.h1 className="text-5xl font-bold mb-2 drop-shadow-lg"
               initial={{ opacity: 0, y: 20 }}

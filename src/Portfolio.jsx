@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import { 
-  FaHome, FaFolder, FaUser, FaEnvelope, FaSun, FaMoon, 
-  FaArrowRight, FaLinkedin, FaGithub, FaDownload,
-  FaBars, FaTimes, FaCogs, FaGamepad, FaLaptopCode, FaCloud, FaMicrochip, FaSearch, FaPaperPlane
-} from 'react-icons/fa';
+  Home, Folder, User, Mail, Sun, Moon, 
+  ArrowRight, Linkedin, Github, Download,
+  Menu, X, Settings, Gamepad2, Laptop, Cloud, Cpu, Search, Send
+} from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ProjectDetailIllustration } from './components/ProjectIllustration';
-import { MessageSquare, X } from 'lucide-react';
+import { MessageSquare } from 'lucide-react';
 import LocalChatInterface from './components/LocalChatInterface';
 
 // Translation strings
@@ -19,7 +19,14 @@ const translations = {
     welcome: "Hey there, welcome! My name is Angel",
     subhead: "Thanks for visiting, you will find some of my programming work here :)",
     portfolio_desc: "Some of my projects include but are not limited to: Linux software engineering, VHDL, XILINX Vivado, information retrieval, databases, cloud computing, OS management, among many others.",
-    about_text: "I am pursuing a degree in Computer Engineering at the University of Arkansas. Currently, I work as a Course Assistant, where my role is crucial in enhancing the academic experience through diligent administrative support and participation in departmental projects. Our team at the University of Arkansas supports the First Year Engineering program by providing comprehensive assistance and facilitating communication between students and faculty.",
+    about_text: `I'm a Computer Engineering graduate (University of Arkansas '25) and currently
+    serving as an IT Specialist. With a strong foundation in Python, SQL, AWS, DevOps,
+    and full-stack development, I design and implement automated workflows and
+    cloud-based monitoring solutions to keep critical systems running smoothly.
+
+    My background includes developing end-to-end applications and data pipelines...
+    Portfolio: https://angelp17.github.io/Portafolio/#top  
+    Perfil en Konzerta: https://www.konzerta.com/candidatos/curriculum/perfil`,
     contact_text: "You can access to my socials or download my resume on the left sidebar. Drop any questions or inquiries you may have on the box below, make sure to include the right information and I will get back as soon as I can.",
     work_button: "Check out some of my work",
     skills_title: "Skills & Technologies",
@@ -48,7 +55,14 @@ const translations = {
     welcome: "¡Hola, bienvenido! Mi nombre es Angel",
     subhead: "Gracias por visitar mi portafolio digital, aqui podras encontrar algunos de mis proyectos de programacion",
     portfolio_desc: "Mis proyectos incluyen pero no se limitan a: ingeniería de software Linux, VHDL, XILINX Vivado, recuperación de información, bases de datos, computación en la nube, entre muchos otros.",
-    about_text: "Estoy cursando un título en Ingeniería Informática en la Universidad de Arkansas, que espero completar en 2025. Actualmente, trabajo como Asistente de Curso, donde mi papel es crucial para mejorar la experiencia académica a través del apoyo administrativo diligente y la participación en proyectos departamentales. Nuestro equipo en la Universidad de Arkansas apoya el programa de Ingeniería de Primer Año proporcionando asistencia integral y facilitando la comunicación entre estudiantes y profesores.",
+    about_text: `Soy un graduado en Ingeniería Informática (Universidad de Arkansas '25) y actualmente
+    trabajo como Especialista en TI. Con una sólida base en Python, SQL, AWS, DevOps,
+    y desarrollo full-stack, diseño e implemento flujos de trabajo automatizados y
+    soluciones de monitoreo basadas en la nube para mantener los sistemas críticos funcionando sin problemas.
+
+    Mi experiencia incluye el desarrollo de aplicaciones de extremo a extremo y pipelines de datos...
+    Portafolio: https://angelp17.github.io/Portafolio/#top  
+    Perfil en Konzerta: https://www.konzerta.com/candidatos/curriculum/perfil`,
     contact_text: "Puedes acceder a mis redes sociales o descargar mi currículum en la barra lateral izquierda. Deja cualquier pregunta o consulta que tengas en el cuadro de abajo, asegúrate de incluir la información correcta y te responderé tan pronto como pueda.",
     work_button: "Mira algunos de mis trabajos",
     skills_title: "Habilidades y Tecnologías",
@@ -91,7 +105,7 @@ const projects = [
     },
     technologies: "HTML5, CSS, C++, indexing, query processing, search algorithms",
     githubPath: "https://github.com/AngelP17/Portafolio/tree/main/Projects/IR",
-    icon: <FaSearch className="w-8 h-8" />,
+    icon: <Search className="w-8 h-8" />,
     color: "bg-[#C8102E]"
   },
   {
@@ -112,7 +126,7 @@ const projects = [
     },
     technologies: "Cloud/OS Management, MapReduce, Security Risk, Spark, AWS, Azure, Oracle Cloud",
     githubPath: "https://github.com/AngelP17/Portafolio/tree/main/Projects/CC",
-    icon: <FaCloud className="w-8 h-8" />,
+    icon: <Cloud className="w-8 h-8" />,
     color: "bg-[#9D2235]"
   },
   {
@@ -133,7 +147,7 @@ const projects = [
     },
     technologies: "VHDL, C#, ModelSim, Virtual Machine Environments",
     githubPath: "https://github.com/AngelP17/Portafolio/tree/main/Projects/SM",
-    icon: <FaMicrochip className="w-8 h-8" />,
+    icon: <Cpu className="w-8 h-8" />,
     color: "bg-[#C8102E]"
   },
   {
@@ -154,7 +168,7 @@ const projects = [
     },
     technologies: "XILINX, C#, FREERTOS, API",
     githubPath: "https://github.com/AngelP17/Portafolio/tree/main/Projects/EBS",
-    icon: <FaCogs className="w-8 h-8" />,
+    icon: <Settings className="w-8 h-8" />,
     color: "bg-[#9D2235]"
   },
   {
@@ -175,7 +189,7 @@ const projects = [
     },
     technologies: "C++, JS, Front/Back End development and implementation, API",
     githubPath: "https://github.com/AngelP17/Portafolio/tree/main/Projects/SFE",
-    icon: <FaGamepad className="w-8 h-8" />,
+    icon: <Gamepad2 className="w-8 h-8" />,
     color: "bg-[#C8102E]"
   },
   {
@@ -196,7 +210,7 @@ const projects = [
     },
     technologies: "JS, Java, JSON, Python, Apache",
     githubPath: "https://github.com/AngelP17/Portafolio/tree/main/Projects/2DG",
-    icon: <FaLaptopCode className="w-8 h-8" />,
+    icon: <Laptop className="w-8 h-8" />,
     color: "bg-[#C8102E]"
   }
 ];
@@ -302,10 +316,10 @@ export default function Portfolio() {
 
   // Navigation items
   const navItems = [
-    { id: 'home', icon: <FaHome className="w-5 h-5" />, label: t.nav_home },
-    { id: 'portfolio', icon: <FaFolder className="w-5 h-5" />, label: t.nav_portfolio },
-    { id: 'about', icon: <FaUser className="w-5 h-5" />, label: t.nav_about },
-    { id: 'contact', icon: <FaEnvelope className="w-5 h-5" />, label: t.nav_contact }
+    { id: 'home', icon: <Home className="w-5 h-5" />, label: t.nav_home },
+    { id: 'portfolio', icon: <Folder className="w-5 h-5" />, label: t.nav_portfolio },
+    { id: 'about', icon: <User className="w-5 h-5" />, label: t.nav_about },
+    { id: 'contact', icon: <Mail className="w-5 h-5" />, label: t.nav_contact }
   ];
 
   // Sidebar categories (example)
@@ -366,7 +380,7 @@ export default function Portfolio() {
         className="md:hidden fixed top-4 right-4 z-50 bg-gradient-to-r from-[#9D2235] to-[#C8102E] text-white p-3 rounded-full shadow-lg"
         onClick={toggleNav}
       >
-        {isNavOpen ? <FaTimes className="w-5 h-5" /> : <FaBars className="w-5 h-5" />}
+        {isNavOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
       </button>
 
       {/* Language Toggle (Mobile) */}
@@ -388,7 +402,7 @@ export default function Portfolio() {
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
       >
-        {sidebarVisible || sidebarPinned ? <FaTimes className="w-5 h-5" /> : <FaBars className="w-5 h-5" />}
+        {sidebarVisible || sidebarPinned ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
       </motion.button>
 
       {/* Sidebar Navigation */}
@@ -407,11 +421,11 @@ export default function Portfolio() {
         <div className="w-64">
           {/* Profile Section */}
           <div className="flex flex-col items-center py-6 border-b border-gray-200 dark:border-gray-700">
-            <div className="w-16 h-16 rounded-full overflow-hidden mb-2 flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #9D2235 0%, #C8102E 100%)' }}>
+            <div className="w-16 h-16 rounded-full overflow-hidden mb-2 flex items-center justify-center avatar-ring">
               <img
                 src={process.env.PUBLIC_URL + '/images/avatar.png'}
                 alt="Angel L. Pinzon"
-                className="w-14 h-14 object-contain object-center rounded-full shadow-lg transition-transform duration-300 hover:scale-105 bg-white"
+                className="w-14 h-14 object-cover object-center rounded-full shadow-lg transition-transform duration-300 hover:scale-105 bg-white dark:bg-black"
               />
             </div>
             <h1 className="text-lg font-bold text-center text-black dark:text-white">Angel L. Pinzon</h1>
@@ -464,13 +478,13 @@ export default function Portfolio() {
           {/* Social Links & Options */}
           <div className="space-y-2 mt-auto pt-4 pb-6 border-t border-gray-200 dark:border-gray-700 px-4">
             <div className="flex space-x-2 justify-center">
-              <a href="https://www.linkedin.com/in/angel-l-pinzon-6715852a0/" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800" target="_blank" rel="noopener noreferrer"><FaLinkedin /></a>
-              <a href="https://github.com/AngelP17" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800" target="_blank" rel="noopener noreferrer"><FaGithub /></a>
-              <a href="mailto:angelpinzon1706@gmail.com" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800"><FaEnvelope /></a>
-              <a href="resume.pdf" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800" download><FaDownload /></a>
+              <a href="https://www.linkedin.com/in/angel-l-pinzon-6715852a0/" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800" target="_blank" rel="noopener noreferrer"><Linkedin className="w-5 h-5" /></a>
+              <a href="https://github.com/AngelP17" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800" target="_blank" rel="noopener noreferrer"><Github className="w-5 h-5" /></a>
+              <a href="mailto:angelpinzon1706@gmail.com" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800"><Mail className="w-5 h-5" /></a>
+              <a href="resume.pdf" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800" download><Download className="w-5 h-5" /></a>
             </div>
             <div className="flex space-x-2 mt-2 justify-center">
-              <button onClick={toggleDarkMode} className={`p-2 rounded ${isDarkMode ? razorbackSolid + ' text-white' : 'bg-gray-200 text-black'}`} aria-label="Toggle dark mode">{isDarkMode ? <FaSun /> : <FaMoon />}</button>
+              <button onClick={toggleDarkMode} className={`p-2 rounded ${isDarkMode ? razorbackSolid + ' text-white' : 'bg-gray-200 text-black'}`} aria-label="Toggle dark mode">{isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}</button>
               <button onClick={toggleLanguage} className={`p-2 rounded ${razorbackSolid} text-white`} aria-label="Toggle language">{language === 'en' ? 'ES' : 'EN'}</button>
             </div>
           </div>
@@ -519,9 +533,9 @@ export default function Portfolio() {
               >
                 <div className="w-32 h-32 rounded-full border-4 border-white dark:border-[#C8102E] overflow-hidden mx-auto mb-4 shadow-lg flex items-center justify-center bg-white dark:bg-black">
                   <img
-                    src={process.env.PUBLIC_URL + '/images/avatar.png'}
+                    src={process.env.PUBLIC_URL + '/images/me.jpg'}
                     alt="Angel L. Pinzon"
-                    className="w-28 h-28 object-contain object-center rounded-full shadow-lg transition-transform duration-300 hover:scale-105 bg-white dark:bg-black"
+                    className="w-28 h-28 object-cover object-center rounded-full shadow-lg transition-transform duration-300 hover:scale-105 bg-white dark:bg-black"
                   />
                 </div>
                 <h1 className="text-5xl font-bold mb-2 text-black dark:text-[#C8102E] drop-shadow-lg">Angel L. Pinzon</h1>
@@ -543,15 +557,15 @@ export default function Portfolio() {
                 >
                   <a href="https://github.com/AngelP17" target="_blank" rel="noopener noreferrer"
                     className="bg-[#C8102E] dark:bg-[#23272f] text-white dark:text-[#C8102E] p-3 rounded-full transition-colors duration-200 shadow-lg hover:bg-[#9D2235] dark:hover:bg-[#C8102E]">
-                    <FaGithub className="w-6 h-6" />
+                    <Github className="w-6 h-6" />
                   </a>
                   <a href="https://www.linkedin.com/in/angel-l-pinzon-6715852a0/" target="_blank" rel="noopener noreferrer"
                     className="bg-[#C8102E] dark:bg-[#23272f] text-white dark:text-[#C8102E] p-3 rounded-full transition-colors duration-200 shadow-lg hover:bg-[#9D2235] dark:hover:bg-[#C8102E]">
-                    <FaLinkedin className="w-6 h-6" />
+                    <Linkedin className="w-6 h-6" />
                   </a>
                   <a href="mailto:angelpinzon1706@gmail.com"
                     className="bg-[#C8102E] dark:bg-[#23272f] text-white dark:text-[#C8102E] p-3 rounded-full transition-colors duration-200 shadow-lg hover:bg-[#9D2235] dark:hover:bg-[#C8102E]">
-                    <FaEnvelope className="w-6 h-6" />
+                    <Mail className="w-6 h-6" />
                   </a>
                 </motion.div>
                 {/* Wrap the 'Check out my work' button in a matching card background */}
@@ -563,7 +577,7 @@ export default function Portfolio() {
                       onClick={() => setActiveSection('portfolio')}
                       className="px-8 py-3 bg-gradient-to-r from-[#9D2235] to-[#C8102E] dark:from-[#23272f] dark:to-[#C8102E] rounded-full hover:from-[#C8102E] hover:to-[#9D2235] dark:hover:from-[#C8102E] dark:hover:to-[#23272f] transition-colors duration-300 font-semibold text-lg shadow-lg transform hover:scale-105 text-white dark:text-white"
                     >
-                      {t.work_button} <FaArrowRight className="inline ml-2" />
+                      {t.work_button} <ArrowRight className="inline ml-2" />
                     </motion.button>
                   </div>
                 </motion.div>
@@ -652,7 +666,7 @@ export default function Portfolio() {
                     className="px-8 py-3 bg-gradient-to-r from-[#9D2235] to-[#C8102E] rounded-full text-white font-semibold text-lg shadow-lg hover:from-[#C8102E] hover:to-[#9D2235] transition-colors duration-300 flex items-center"
                     onClick={() => window.open('https://github.com/AngelP17', '_blank')}
                   >
-                    Visit GitHub <FaArrowRight className="ml-2" />
+                    Visit GitHub <ArrowRight className="ml-2" />
                   </button>
                 </div>
               ) : (
@@ -707,7 +721,7 @@ export default function Portfolio() {
                             className="w-full py-3 bg-gradient-to-r from-[#9D2235] to-[#C8102E] text-white rounded-lg hover:from-[#C8102E] hover:to-[#9D2235] transition-colors font-medium flex items-center justify-center group mt-auto"
                           >
                             <span>{t.view_project}</span>
-                            <FaArrowRight className="ml-2 group-hover:translate-x-1 transition-transform duration-200" />
+                            <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform duration-200" />
                           </button>
                         </div>
                       </motion.div>
@@ -768,7 +782,7 @@ export default function Portfolio() {
                       rel="noopener noreferrer"
                       className="bg-gradient-to-r from-[#9D2235] to-[#C8102E] text-white font-bold py-2 px-6 rounded-lg flex items-center gap-2 shadow hover:from-[#C8102E] hover:to-[#9D2235] transition"
                     >
-                      <FaGithub /> {t.view_on_github}
+                      <Github /> {t.view_on_github}
                     </a>
                   </div>
                   {/* Back Button */}
@@ -777,7 +791,7 @@ export default function Portfolio() {
                       onClick={closeProject}
                       className="text-gray-400 hover:text-[#C8102E] transition-colors duration-200 flex items-center"
                     >
-                      <FaArrowRight className="rotate-180 mr-2" /> {t.back_to_portfolio}
+                      <ArrowRight className="rotate-180 mr-2" /> {t.back_to_portfolio}
                     </button>
                   </div>
                 </motion.div>
@@ -801,46 +815,13 @@ export default function Portfolio() {
           >
             <div className="max-w-4xl mx-auto">
               <h2 className="text-3xl font-bold mb-10 text-center text-black dark:text-white">{t.nav_about}</h2>
-              
               <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8">
-                <div className="flex flex-col md:flex-row items-center mb-8">
-                  <div className="mb-6 md:mb-0 md:mr-8">
-                    <div className="w-32 h-32 rounded-full border-4 border-[#C8102E] overflow-hidden shadow-lg transition-transform duration-300 hover:scale-105 flex items-center justify-center">
-                      <img
-                        src={process.env.PUBLIC_URL + '/images/me.jpg'}
-                        alt="Angel L. Pinzon"
-                        className="w-32 h-32 rounded-full border-4 border-[#C8102E] shadow-lg transition-transform duration-300 hover:scale-105 object-cover object-center"
-                      />
-                    </div>
+                <div className="flex flex-col items-center mb-8">
+                  <div className="flex-grow w-full">
+                    <p className="text-gray-700 dark:text-gray-300 whitespace-pre-line leading-relaxed text-lg text-center md:text-left">
+                      {t.about_text}
+                    </p>
                   </div>
-                  <div>
-                    <h3 className="text-2xl font-bold mb-2 text-black dark:text-white">Angel L. Pinzon</h3>
-                    <p className="text-gray-600 dark:text-gray-400 mb-4">Computer Engineering Student</p>
-                    <div className="flex space-x-3">
-                      <a 
-                        href="https://www.linkedin.com/in/angel-l-pinzon-6715852a0/" 
-                        className="text-[#C8102E] hover:text-[#9D2235] dark:text-[#C8102E] dark:hover:text-[#9D2235]"
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                      >
-                        <FaLinkedin className="w-5 h-5" />
-                      </a>
-                      <a 
-                        href="https://github.com/AngelP17" 
-                        className="text-[#C8102E] hover:text-[#9D2235] dark:text-[#C8102E] dark:hover:text-[#9D2235]"
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                      >
-                        <FaGithub className="w-5 h-5" />
-                      </a>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="prose dark:prose-invert max-w-none">
-                  <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-                    {t.about_text}
-                  </p>
                 </div>
               </div>
             </div>
@@ -933,7 +914,7 @@ export default function Portfolio() {
                     className="w-full bg-gradient-to-r from-[#9D2235] to-[#C8102E] text-white px-6 py-3 rounded-lg transition duration-300 flex items-center justify-center"
                   >
                     <span>{t.send}</span>
-                    <FaPaperPlane className="ml-2" />
+                    <Send className="ml-2" />
                   </button>
                 </form>
               </div>
