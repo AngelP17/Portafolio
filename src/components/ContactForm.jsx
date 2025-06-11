@@ -13,7 +13,7 @@ const ContactForm = ({ onSubmit, onCancel }) => {
   return (
     <form onSubmit={handleSubmit} className="space-y-3">
       <div>
-        <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+        <label htmlFor="name" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300">
           Name
         </label>
         <input
@@ -21,13 +21,13 @@ const ContactForm = ({ onSubmit, onCancel }) => {
           id="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-600 border border-gray-300 dark:border-gray-500 rounded-md shadow-sm focus:outline-none focus:ring-[#C8102E] focus:border-[#C8102E]"
+          className="mt-1 block w-full px-3 py-2 bg-white dark:bg-neutral-800 border border-neutral-300 dark:border-neutral-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-dark focus:border-primary-dark transition-colors"
           required
         />
       </div>
       
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+        <label htmlFor="email" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300">
           Email
         </label>
         <input
@@ -35,13 +35,13 @@ const ContactForm = ({ onSubmit, onCancel }) => {
           id="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-600 border border-gray-300 dark:border-gray-500 rounded-md shadow-sm focus:outline-none focus:ring-[#C8102E] focus:border-[#C8102E]"
+          className="mt-1 block w-full px-3 py-2 bg-white dark:bg-neutral-800 border border-neutral-300 dark:border-neutral-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-dark focus:border-primary-dark transition-colors"
           required
         />
       </div>
       
       <div>
-        <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+        <label htmlFor="message" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300">
           Message
         </label>
         <textarea
@@ -49,7 +49,7 @@ const ContactForm = ({ onSubmit, onCancel }) => {
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           rows={4}
-          className="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-600 border border-gray-300 dark:border-gray-500 rounded-md shadow-sm focus:outline-none focus:ring-[#C8102E] focus:border-[#C8102E]"
+          className="mt-1 block w-full px-3 py-2 bg-white dark:bg-neutral-800 border border-neutral-300 dark:border-neutral-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-dark focus:border-primary-dark transition-colors"
           required
         />
       </div>
@@ -57,14 +57,14 @@ const ContactForm = ({ onSubmit, onCancel }) => {
       <div className="flex space-x-2">
         <button
           type="submit"
-          className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-gradient-to-r from-[#9D2235] to-[#C8102E] hover:from-[#C8102E] hover:to-[#9D2235] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#C8102E]"
+          className="inline-flex justify-center py-2 px-4 border border-transparent shadow-card text-sm font-medium rounded-md text-white bg-gradient-to-r from-primary-light to-primary-dark hover:from-accent-purple hover:to-accent-emerald focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-dark transition-colors"
         >
           Send Message
         </button>
         <button
           type="button"
           onClick={onCancel}
-          className="inline-flex justify-center py-2 px-4 border border-gray-300 dark:border-gray-600 shadow-sm text-sm font-medium rounded-md text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#C8102E]"
+          className="inline-flex justify-center py-2 px-4 border border-neutral-300 dark:border-neutral-600 shadow-sm text-sm font-medium rounded-md text-neutral-700 dark:text-neutral-200 bg-white dark:bg-neutral-800 hover:bg-neutral-100 dark:hover:bg-neutral-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-dark transition-colors"
         >
           Cancel
         </button>

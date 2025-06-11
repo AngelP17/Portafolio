@@ -1,15 +1,15 @@
 import React from "react";
 
 const categoryColors = {
-  Web: 'bg-[#C8102E] text-white',
-  Cloud: 'bg-[#9D2235] text-white',
-  Embedded: 'bg-[#BE123C] text-white',
-  Game: 'bg-[#C8102E] text-white',
-  Other: 'bg-gray-500 text-white',
+  Web: 'bg-primary-light text-white',
+  Cloud: 'bg-primary-dark text-white',
+  Embedded: 'bg-accent-emerald text-white',
+  Game: 'bg-primary-light text-white',
+  Other: 'bg-neutral-500 text-white',
 };
 
 const ProjectImage = ({ src, alt, category, icon, className = "", showOverlay = true }) => (
-  <div className={`relative w-full h-40 flex items-center justify-center bg-gray-100 dark:bg-gray-800 rounded-t-xl shadow-md overflow-hidden group ${className}`}>
+  <div className={`relative w-full h-40 flex items-center justify-center bg-neutral-100 dark:bg-neutral-800 rounded-t-xl shadow-card overflow-hidden group ${className}`}>
     <img
       src={src}
       alt={alt}
@@ -23,7 +23,7 @@ const ProjectImage = ({ src, alt, category, icon, className = "", showOverlay = 
     )}
     {/* Optional icon overlay (bottom right) */}
     {icon && (
-      <span className="absolute bottom-2 right-2 bg-white/80 dark:bg-black/80 rounded-full p-1 shadow text-xl">{icon}</span>
+      <span className="absolute bottom-2 right-2 bg-white/80 dark:bg-neutral-900/80 rounded-full p-1 shadow-card text-xl">{icon}</span>
     )}
     {/* Overlay on hover */}
     {showOverlay && (

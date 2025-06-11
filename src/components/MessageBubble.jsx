@@ -22,10 +22,10 @@ const MessageBubble = ({ message, onContactRequest }) => {
     >
       <div className={`max-w-[75%] ${isUser ? 'order-1' : 'order-none'} w-fit`}>
         <div
-          className={`rounded-2xl px-4 py-3 sm:px-6 sm:py-4 shadow-md break-words whitespace-pre-wrap text-base sm:text-lg transition-colors duration-200
+          className={`rounded-2xl px-4 py-3 sm:px-6 sm:py-4 shadow-card break-words whitespace-pre-wrap text-base sm:text-lg transition-colors duration-200
             ${isUser
-              ? 'bg-gradient-to-r from-purple-500 to-red-500 text-white border border-purple-400/30'
-              : 'bg-[#23263a] text-gray-100 border border-gray-600'}
+              ? 'bg-gradient-to-r from-accent-purple to-accent-emerald text-white border border-accent-purple/30'
+              : 'bg-neutral-900 text-neutral-100 border border-neutral-700'}
           `}
           style={{ wordBreak: 'break-word' }}
         >
@@ -33,14 +33,14 @@ const MessageBubble = ({ message, onContactRequest }) => {
           {isContactPrompt && onContactRequest && (
             <button
               onClick={onContactRequest}
-              className="mt-3 px-4 py-2 bg-gradient-to-r from-[#9D2235] to-[#C8102E] text-white rounded-lg transition-colors shadow hover:from-[#C8102E] hover:to-[#9D2235]"
+              className="mt-3 px-4 py-2 bg-gradient-to-r from-primary-light to-primary-dark text-white rounded-lg transition-colors shadow-card hover:from-accent-purple hover:to-accent-emerald"
             >
               Contact Angel
             </button>
           )}
         </div>
         <div
-          className={`text-xs mt-1 text-gray-400 ${
+          className={`text-xs mt-1 text-neutral-400 ${
             isUser ? 'text-right mr-2' : 'text-left ml-2'
           }`}
         >

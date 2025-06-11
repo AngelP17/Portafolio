@@ -223,27 +223,27 @@ const LocalChatInterface = () => {
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.95 }}
       transition={{ duration: 0.4, type: 'spring' }}
-      className="w-full max-w-md mx-auto h-[600px] bg-white dark:bg-gray-900 rounded-xl shadow-2xl overflow-hidden flex flex-col"
+      className="w-full max-w-md mx-auto h-[600px] bg-gray-100 dark:bg-gray-800 rounded-xl shadow-card overflow-hidden flex flex-col border border-neutral-200 dark:border-neutral-700 font-sans"
     >
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, type: 'spring' }}
-        className="bg-white dark:bg-gray-900 px-6 py-4 flex items-center justify-between border-b border-gray-200 dark:border-gray-700"
+        className="bg-white dark:bg-neutral-900 px-6 py-4 flex items-center justify-between border-b border-neutral-200 dark:border-neutral-700"
       >
         <div className="flex items-center space-x-3">
           <div className="w-10 h-10 rounded-full bg-gradient-to-r from-purple-600 to-red-500 flex items-center justify-center shadow-lg">
             <MessageSquare className="w-5 h-5 text-white" />
           </div>
           <div>
-            <h2 className="font-semibold text-gray-900 dark:text-white">Angel's Portfolio Assistant</h2>
-            <p className="text-xs text-gray-500 dark:text-gray-400">Ask me about Angel's work and experience</p>
+            <h2 className="font-semibold text-neutral-900 dark:text-neutral-50">Angel's Portfolio Assistant</h2>
+            <p className="text-xs text-neutral-500 dark:text-neutral-400">Ask me about Angel's work and experience</p>
           </div>
         </div>
       </motion.div>
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-white dark:bg-gray-900 flex flex-col">
+      <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-white dark:bg-neutral-900 flex flex-col">
         <AnimatePresence initial={false}>
           {messages.map((message) => (
             <MessageBubble 
@@ -264,9 +264,9 @@ const LocalChatInterface = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
             transition={{ duration: 0.4, type: 'spring' }}
-            className="bg-gray-100 dark:bg-gray-800 rounded-2xl p-4 border border-gray-200 dark:border-gray-700 self-start max-w-[75%]"
+            className="bg-neutral-100 dark:bg-neutral-800 rounded-2xl p-4 border border-neutral-200 dark:border-neutral-700 self-start max-w-[75%]"
           >
-            <h3 className="text-lg font-medium mb-3 text-gray-900 dark:text-white">Contact Angel</h3>
+            <h3 className="text-lg font-medium mb-3 text-neutral-900 dark:text-neutral-50">Contact Angel</h3>
             <ContactForm 
               onSubmit={handleFormSubmit}
               onCancel={() => setShowContactForm(false)}
@@ -281,7 +281,7 @@ const LocalChatInterface = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, type: 'spring' }}
-        className="p-4 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700"
+        className="p-4 bg-gray-100 dark:bg-gray-800 border-t border-neutral-200 dark:border-neutral-700 font-sans"
       >
         <div className="flex items-center space-x-2">
           <textarea
@@ -289,16 +289,16 @@ const LocalChatInterface = () => {
             onChange={(e) => setInputText(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Ask about Angel's skills, experience, or projects..."
-            className="flex-1 max-h-20 px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-full focus:outline-none focus:ring-2 focus:ring-purple-400 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 resize-none transition-all duration-200 shadow-inner text-base"
+            className="flex-1 max-h-20 px-4 py-2 bg-neutral-100 dark:bg-neutral-800 rounded-full focus:outline-none focus:ring-2 focus:ring-accent-purple text-neutral-900 dark:text-neutral-100 placeholder-neutral-500 dark:placeholder-neutral-400 resize-none transition-all duration-200 shadow-inner text-base"
             rows={1}
           />
           <button
             onClick={handleSendMessage}
             disabled={inputText.trim() === ''}
-            className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 shadow-lg ${
+            className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 shadow-card ${
               inputText.trim() === '' 
-                ? 'bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500' 
-                : 'bg-gradient-to-r from-purple-500 to-red-500 text-white hover:scale-105'
+                ? 'bg-neutral-200 dark:bg-neutral-700 text-neutral-400 dark:text-neutral-500' 
+                : 'bg-gradient-to-r from-accent-purple to-accent-emerald text-white hover:scale-105'
             }`}
             aria-label="Send message"
           >

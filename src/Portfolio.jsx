@@ -374,7 +374,7 @@ export default function Portfolio() {
   };
 
   return (
-    <div className={`flex flex-col md:flex-row min-h-screen ${isDarkMode ? 'dark bg-black' : 'bg-white'}`}>
+    <div className={`flex md:flex-row min-h-screen w-full font-sans ${isDarkMode ? 'dark' : ''} overflow-x-hidden`} style={{ background: isDarkMode ? 'linear-gradient(135deg, #181c24 0%, #23272f 100%)' : 'linear-gradient(135deg, #f8fafc 0%, #e0e7ef 100%)' }}>
       {/* Mobile Navigation Toggle */}
       <button 
         className="md:hidden fixed top-4 right-4 z-50 bg-gradient-to-r from-[#9D2235] to-[#C8102E] text-white p-3 rounded-full shadow-lg"
@@ -391,37 +391,50 @@ export default function Portfolio() {
         {language === 'en' ? 'ES' : 'EN'}
       </button>
 
-      {/* Add a floating sidebar toggle button (hamburger/close) always visible at top-left */}
-      <motion.button
-        className="fixed top-4 left-4 z-50 bg-gradient-to-r from-[#9D2235] to-[#C8102E] text-white p-3 rounded-full shadow-lg"
-        onClick={handleSidebarToggle}
-        aria-label={sidebarVisible || sidebarPinned ? 'Close sidebar' : 'Open sidebar'}
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.95 }}
-      >
-        {sidebarVisible || sidebarPinned ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-      </motion.button>
+      {/* Only one sidebar toggle button on mobile, always triggers sidebar */}
+      {!sidebarVisible && !sidebarPinned && (
+        <button 
+          className="md:hidden fixed top-4 left-4 z-50 bg-gradient-to-r from-[#9D2235] to-[#C8102E] text-white p-3 rounded-full shadow-lg"
+          onClick={handleSidebarToggle}
+          aria-label="Open sidebar"
+        >
+          <Menu className="w-5 h-5" />
+        </button>
+      )}
 
-      {/* Sidebar Navigation */}
+      {/* Desktop Sidebar Toggle Button (top left, only on md and up) */}
+      {window.innerWidth >= 768 && (
+        <motion.button
+          className="hidden md:block fixed top-4 left-4 z-50 bg-gradient-to-r from-[#9D2235] to-[#C8102E] text-white p-3 rounded-full shadow-lg"
+          onClick={handleSidebarToggle}
+          aria-label={sidebarVisible || sidebarPinned ? 'Close sidebar' : 'Open sidebar'}
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          {sidebarVisible || sidebarPinned ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+        </motion.button>
+      )}
+
+      {/* Sidebar: auto-resize and animate width on desktop, overlay/toggle on desktop, mobile unchanged */}
       <motion.aside
         onMouseEnter={handleSidebarMouseEnter}
         onMouseLeave={handleSidebarMouseLeave}
         initial={false}
         animate={{
-          width: sidebarVisible || sidebarPinned ? '16rem' : '0rem',
-          opacity: sidebarVisible || sidebarPinned ? 1 : 0
+          width: window.innerWidth >= 768 ? (sidebarVisible || sidebarPinned ? 256 : 0) : '100%',
+          opacity: window.innerWidth >= 768 ? (sidebarVisible || sidebarPinned ? 1 : 0) : 1
         }}
         transition={{ type: 'spring', stiffness: 300, damping: 30, mass: 1 }}
-        className={`fixed top-0 left-0 h-screen flex flex-col shadow-lg z-40 bg-white dark:bg-black text-black dark:text-white overflow-hidden`}
+        className={`md:static fixed top-0 left-0 h-screen flex flex-col z-40 text-black dark:text-white overflow-hidden md:w-64 w-0 transition-all duration-300 ${sidebarVisible || sidebarPinned || window.innerWidth >= 768 ? 'block' : 'hidden'} bg-gradient-to-b from-white via-gray-100 to-gray-200 dark:from-[#181c24] dark:via-[#23272f] dark:to-[#181c24] border-r border-neutral-200 dark:border-neutral-800 shadow-xl`}
         style={{ willChange: 'width, opacity' }}
       >
         <div className="w-64">
           {/* Profile Section */}
           <div className="flex flex-col items-center py-6 border-b border-gray-200 dark:border-gray-700">
-            <div className="w-16 h-16 rounded-full overflow-hidden mb-2 flex items-center justify-center avatar-ring">
+            <div className="w-16 h-16 rounded-full overflow-hidden mb-2 flex items-center justify-center border-2 border-neutral-300 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-800">
               <img
                 src={process.env.PUBLIC_URL + '/images/avatar.png'}
                 alt="Angel L. Pinzon"
@@ -492,7 +505,7 @@ export default function Portfolio() {
       </motion.aside>
 
       {/* Main Content Area */}
-      <main className={`flex-1 bg-white dark:bg-black text-black dark:text-white transition-colors duration-300 pb-12 ${sidebarVisible || sidebarPinned ? 'md:ml-64' : 'ml-0'}`}>
+      <main className={`flex-1 flex flex-col items-center justify-start transition-colors duration-300 pb-12 min-h-screen px-4 md:px-12 bg-transparent`}>
         {/* Overlay for mobile nav */}
         {isNavOpen && (
           <div 
@@ -510,28 +523,35 @@ export default function Portfolio() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -30 }}
             transition={{ duration: 0.5, type: 'spring' }}
-            className="min-h-screen flex flex-col items-center justify-center px-6 py-10 text-center bg-white dark:bg-black transition-colors duration-300 relative overflow-hidden"
+            className="min-h-screen flex flex-col items-center justify-center px-6 py-10 text-center relative overflow-hidden"
           >
-            {/* Animated SVG background */}
-            <motion.svg
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 0.15, scale: 1 }}
-              transition={{ duration: 1.2, delay: 0.2 }}
-              className="absolute left-0 top-0 w-full h-full z-0"
-              viewBox="0 0 1440 320"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
+            {/* Animated Gradient Blobs */}
+            <motion.div
+              className="hidden md:block absolute -top-32 -left-32 w-[600px] h-[600px] z-0"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 0.5, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              style={{ filter: 'blur(120px)' }}
             >
-              <path fill="#fff" fillOpacity="0.1" d="M0,288L60,266.7C120,245,240,203,360,186.7C480,171,600,181,720,192C840,203,960,213,1080,218.7C1200,224,1320,224,1380,224L1440,224L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z" />
-            </motion.svg>
+              <div className="w-full h-full rounded-full bg-gradient-to-br from-primary-light/60 via-accent-purple/40 to-primary-dark/30 dark:from-primary-dark/60 dark:via-accent-purple/40 dark:to-primary-light/30" />
+            </motion.div>
+            <motion.div
+              className="hidden md:block absolute -bottom-40 -right-40 w-[700px] h-[700px] z-0"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 0.5, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              style={{ filter: 'blur(140px)' }}
+            >
+              <div className="w-full h-full rounded-full bg-gradient-to-tr from-accent-purple/40 via-primary-dark/30 to-primary-light/20 dark:from-accent-purple/40 dark:via-primary-dark/30 dark:to-primary-light/20" />
+            </motion.div>
             <div className="max-w-3xl mx-auto z-10">
               <motion.div
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.7, type: 'spring' }}
-                className="bg-white dark:bg-black rounded-2xl shadow-lg px-8 py-10 transition-colors duration-300"
+                className="bg-gray-100 dark:bg-gray-800 rounded-2xl shadow-lg px-8 py-10 transition-colors duration-300 border border-neutral-200 dark:border-neutral-700"
               >
-                <div className="w-32 h-32 rounded-full border-4 border-white dark:border-[#C8102E] overflow-hidden mx-auto mb-4 shadow-lg flex items-center justify-center bg-white dark:bg-black">
+                <div className="w-32 h-32 rounded-full border-4 border-neutral-200 dark:border-neutral-700 overflow-hidden mx-auto mb-4 shadow-lg flex items-center justify-center bg-gray-100 dark:bg-gray-800">
                   <img
                     src={process.env.PUBLIC_URL + '/images/me.jpg'}
                     alt="Angel L. Pinzon"
@@ -570,7 +590,7 @@ export default function Portfolio() {
                 </motion.div>
                 {/* Wrap the 'Check out my work' button in a matching card background */}
                 <motion.div className="flex justify-center mt-6">
-                  <div className="bg-white dark:bg-black rounded-2xl shadow-lg px-6 py-4 transition-colors duration-300">
+                  <div className="bg-gray-100 dark:bg-gray-800 rounded-2xl shadow-lg px-6 py-4 transition-colors duration-300">
                     <motion.button
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.97 }}
@@ -589,7 +609,7 @@ export default function Portfolio() {
                 transition={{ delay: 1, duration: 0.7 }}
                 className="mt-8 flex justify-center"
               >
-                <div className="bg-white dark:bg-black rounded-2xl shadow-lg px-8 py-4 transition-colors duration-300 w-full max-w-2xl">
+                <div className="bg-gray-100 dark:bg-gray-800 rounded-2xl shadow-lg px-8 py-4 transition-colors duration-300 border border-neutral-200 dark:border-neutral-700 w-full max-w-2xl">
                   <h3 className="text-2xl font-bold text-black dark:text-[#C8102E] mb-4 text-center">{t.skills_title}</h3>
                   <div className="flex flex-wrap justify-center gap-3">
                     {skills.map((skill, idx) => (
@@ -601,9 +621,6 @@ export default function Portfolio() {
                 </div>
               </motion.div>
             </div>
-            <svg className="absolute bottom-0 w-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-              <path fill="#1a202c" fillOpacity="1" d="M0,288L60,266.7C120,245,240,203,360,186.7C480,171,600,181,720,192C840,203,960,213,1080,218.7C1200,224,1320,224,1380,224L1440,224L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path>
-            </svg>
           </motion.section>
         )}
         </AnimatePresence>
@@ -649,7 +666,7 @@ export default function Portfolio() {
                     className={`px-3 py-1 rounded-full text-xs font-medium border transition-all duration-200 ${
                       selectedTech === tech
                         ? 'bg-gradient-to-r ' + razorbackGradient + ' text-white border-transparent'
-                        : 'bg-white dark:bg-black text-[#9D2235] border-[#9D2235] dark:border-[#C8102E] hover:bg-[#9D2235] hover:text-white dark:hover:bg-[#C8102E]'
+                        : 'bg-gray-100 dark:bg-gray-800 text-[#9D2235] border-[#9D2235] dark:border-[#C8102E] hover:bg-[#9D2235] hover:text-white dark:hover:bg-[#C8102E]'
                     }`}
                   >
                     {tech}
@@ -689,7 +706,7 @@ export default function Portfolio() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: idx * 0.08, duration: 0.5, type: 'spring' }}
                         whileHover={{ scale: 1.04, boxShadow: '0 8px 32px 0 rgba(156,34,53,0.18)' }}
-                        className="bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-lg flex flex-col justify-between transition-all duration-300 border border-gray-200 dark:border-gray-800 hover:border-[#C8102E] hover:brightness-105"
+                        className="bg-gray-100 dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg flex flex-col justify-between transition-all duration-300 border border-neutral-200 dark:border-neutral-700 hover:border-[#C8102E] hover:brightness-105"
                         style={{ boxShadow: '0 2px 8px 0 rgba(30,41,59,0.08)' }}
                       >
                         {/* SVG Illustration (centered, with background) */}
@@ -747,7 +764,7 @@ export default function Portfolio() {
                   animate={{ scale: 1, y: 0, opacity: 1 }}
                   exit={{ scale: 0.95, y: 40, opacity: 0 }}
                   transition={{ duration: 0.3 }}
-                  className="bg-white dark:bg-black w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden border border-gray-200 dark:border-gray-800 mx-auto"
+                  className="bg-gray-100 dark:bg-gray-800 w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden border border-neutral-200 dark:border-neutral-700 mx-auto"
                 >
                   {/* Header */}
                   <div className="px-8 pt-8 pb-2 text-center">
@@ -815,7 +832,7 @@ export default function Portfolio() {
           >
             <div className="max-w-4xl mx-auto">
               <h2 className="text-3xl font-bold mb-10 text-center text-black dark:text-white">{t.nav_about}</h2>
-              <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8">
+              <div className="bg-gray-100 dark:bg-gray-800 rounded-xl shadow-lg p-8">
                 <div className="flex flex-col items-center mb-8">
                   <div className="flex-grow w-full">
                     <p className="text-gray-700 dark:text-gray-300 whitespace-pre-line leading-relaxed text-lg text-center md:text-left">
@@ -846,7 +863,7 @@ export default function Portfolio() {
                 {t.contact_text}
               </p>
               
-              <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8">
+              <div className="bg-gray-100 dark:bg-gray-800 rounded-xl shadow-lg p-8">
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
