@@ -79,8 +79,64 @@ const NoProjectsFound = () => {
   );
 };
 
+// Modal component for project details
+const ProjectModal: React.FC<{ project: any; language: string; onClose: () => void }> = ({ project, language, onClose }) => {
+  if (!project) return null;
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+      <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl max-w-lg w-full p-8 relative animate-fadeIn">
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 text-gray-500 hover:text-red-500 text-2xl font-bold focus:outline-none"
+          aria-label="Close"
+        >
+          &times;
+        </button>
+        <div className="flex flex-col items-center">
+          <img
+            src={project.image}
+            alt={project.title[language]}
+            className="w-32 h-32 rounded-xl object-cover mb-4 shadow-lg border-2 border-slate-200 dark:border-slate-700"
+          />
+          <h2 className="text-2xl font-bold mb-2 text-slate-900 dark:text-white text-center">{project.title[language]}</h2>
+          <p className="text-gray-700 dark:text-gray-300 mb-4 text-center">{project.description[language]}</p>
+          <div className="flex flex-wrap gap-2 mb-4 justify-center">
+            {project.technologies[language].split(', ').map((tech: string, idx: number) => (
+              <span
+                key={idx}
+                className="px-3 py-1 bg-gradient-to-r from-gray-100 to-gray-50 dark:from-gray-700 dark:to-gray-800 text-gray-700 dark:text-gray-200 rounded-full text-sm font-medium shadow-sm border border-gray-200 dark:border-gray-600"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+          <div className="flex gap-3 w-full justify-center">
+            <a
+              href={project.githubPath}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 text-center px-4 py-2.5 bg-gradient-to-r from-[#C8102E] to-[#9D2235] text-white rounded-lg hover:from-[#9D2235] hover:to-[#7A1A2A] transition-all duration-300 font-bold shadow-md hover:shadow-lg transform hover:scale-105"
+            >
+              {language === 'en' ? 'View Code' : 'Ver Código'}
+            </a>
+            <a
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 text-center px-4 py-2.5 border-2 border-[#C8102E] text-[#C8102E] rounded-lg hover:bg-[#C8102E] hover:text-white transition-all duration-300 font-bold shadow-md hover:shadow-lg transform hover:scale-105"
+            >
+              {language === 'en' ? 'Live Demo' : 'Demo en Vivo'}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export const Portfolio: React.FC<PortfolioProps> = ({ searchQuery, selectedCategory, setSelectedCategory }) => {
   const { language, t } = useTranslation();
+  const [selectedProject, setSelectedProject] = useState<any | null>(null);
 
   const categories = [
     { key: 'All', label: t('categories.all') },
@@ -145,7 +201,8 @@ export const Portfolio: React.FC<PortfolioProps> = ({ searchQuery, selectedCateg
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 whileHover={{ y: -5 }}
-                className="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 border border-slate-200/60 dark:border-slate-700/60 group relative"
+                className="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 border border-slate-200/60 dark:border-slate-700/60 group relative cursor-pointer"
+                onClick={() => setSelectedProject(project)}
               >
                 <div className="relative h-48 overflow-hidden">
                   <ProjectImage project={project} language={language} />
@@ -194,6 +251,9 @@ export const Portfolio: React.FC<PortfolioProps> = ({ searchQuery, selectedCateg
             ))
           )}
         </div>
+        {selectedProject && (
+          <ProjectModal project={selectedProject} language={language} onClose={() => setSelectedProject(null)} />
+        )}
       </div>
     </section>
   );
