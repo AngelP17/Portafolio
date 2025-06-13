@@ -94,14 +94,9 @@ const ProjectModal: React.FC<{ project: any; language: string; onClose: () => vo
           &times;
         </button>
         <div className="flex flex-col items-center">
-          <div className={`mb-4 p-3 rounded-xl ${project.color} shadow-lg backdrop-blur-sm bg-opacity-90 flex items-center justify-center`}>
-            <Icon className="w-8 h-8 text-white" />
+          <div className={`mb-4 p-4 rounded-2xl ${project.color} shadow-lg flex items-center justify-center`}>
+            <Icon className="w-20 h-20 text-white" />
           </div>
-          <img
-            src={project.image}
-            alt={project.title[language]}
-            className="w-32 h-32 rounded-xl object-cover mb-4 shadow-lg border-2 border-slate-200 dark:border-slate-700"
-          />
           <h2 className="text-2xl font-bold mb-2 text-slate-900 dark:text-white text-center">{project.title[language]}</h2>
           <p className="text-gray-700 dark:text-gray-300 mb-4 text-center">{project.description[language]}</p>
           <div className="flex flex-wrap gap-2 mb-4 justify-center">
