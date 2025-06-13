@@ -36,7 +36,7 @@ export const Hero: React.FC<HeroProps> = () => {
           <motion.img
             src={me}
             alt="Angel Pinzon"
-            className="w-32 h-32 lg:w-40 lg:h-40 rounded-full mx-auto shadow-2xl shadow-black/20 transform hover:scale-105 transition-all duration-500 border-4 border-white/20"
+            className="w-32 h-32 lg:w-40 lg:h-40 rounded-full mx-auto shadow-2xl shadow-black/20 transform hover:scale-105 transition-all duration-500 border-4 border-white/20 object-cover bg-slate-200 dark:bg-slate-800"
             whileHover={{ scale: 1.1, rotate: 3 }}
             transition={{ type: 'spring', stiffness: 200, damping: 10 }}
           />
