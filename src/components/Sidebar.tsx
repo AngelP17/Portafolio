@@ -13,6 +13,7 @@ import { motion } from 'framer-motion';
 import { ThemeToggle } from './ThemeToggle';
 import { LanguageToggle } from './LanguageToggle';
 import { useTranslation } from '../hooks/useTranslation';
+import avatar from '../../avatar.png';
 
 interface NavItem {
   id: string;
@@ -84,7 +85,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           <div className="flex items-center space-x-4">
             <div className="relative">
               <motion.img 
-                src="/Portafolio/avatar.png" 
+                src={avatar} 
                 alt="Avatar"
                 className="w-20 h-20 rounded-2xl shadow-xl shadow-blue-500/25 dark:shadow-blue-500/40 transform hover:scale-105 transition-all duration-300" 
                 whileHover={{ scale: 1.1 }}

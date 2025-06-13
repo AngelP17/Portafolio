@@ -2,6 +2,7 @@ import React from 'react';
 import { Github, Linkedin, Mail, ExternalLink } from 'lucide-react';
 import { useTranslation } from '../hooks/useTranslation';
 import { motion } from 'framer-motion';
+import me from '../../me.jpg';
 
 interface HeroProps {}
 
@@ -33,7 +34,7 @@ export const Hero: React.FC<HeroProps> = () => {
           variants={{ hidden: { y: 20, opacity: 0 }, visible: { y: 0, opacity: 1 } }}
         >
           <motion.img
-            src="/Portafolio/me.jpg"
+            src={me}
             alt="Angel Pinzon"
             className="w-32 h-32 lg:w-40 lg:h-40 rounded-full mx-auto shadow-2xl shadow-black/20 transform hover:scale-105 transition-all duration-500 border-4 border-white/20"
             whileHover={{ scale: 1.1, rotate: 3 }}
