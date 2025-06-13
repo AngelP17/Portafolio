@@ -82,6 +82,7 @@ const NoProjectsFound = () => {
 // Modal component for project details
 const ProjectModal: React.FC<{ project: any; language: string; onClose: () => void }> = ({ project, language, onClose }) => {
   if (!project) return null;
+  const Icon = project.icon;
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
       <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl max-w-lg w-full p-8 relative animate-fadeIn">
@@ -93,6 +94,9 @@ const ProjectModal: React.FC<{ project: any; language: string; onClose: () => vo
           &times;
         </button>
         <div className="flex flex-col items-center">
+          <div className={`mb-4 p-3 rounded-xl ${project.color} shadow-lg backdrop-blur-sm bg-opacity-90 flex items-center justify-center`}>
+            <Icon className="w-8 h-8 text-white" />
+          </div>
           <img
             src={project.image}
             alt={project.title[language]}
