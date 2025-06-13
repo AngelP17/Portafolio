@@ -27,7 +27,7 @@ export const Contact = () => {
             <div className="space-y-4">
               <a href="mailto:angel.pinzon17@gmail.com" className="flex items-center space-x-3 group">
                 <Mail className="w-6 h-6 text-blue-500"/>
-                <span className="text-slate-700 dark:text-slate-300 group-hover:text-blue-500 transition-colors">angel.pinzon17@gmail.com</span>
+                <span className="text-slate-700 dark:text-slate-300 group-hover:text-blue-500 transition-colors">angelpinzon1706@gmail.com</span>
               </a>
               <div className="flex items-center space-x-3">
                 <Phone className="w-6 h-6 text-blue-500"/>
@@ -35,7 +35,7 @@ export const Contact = () => {
               </div>
               <div className="flex items-center space-x-3">
                 <MapPin className="w-6 h-6 text-blue-500"/>
-                <span className="text-slate-700 dark:text-slate-300">22 S DUNCAN AVE</span>
+                <span className="text-slate-700 dark:text-slate-300">California, United States</span>
               </div>
             </div>
           </div>
