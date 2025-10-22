@@ -1,5 +1,38 @@
 export const experiences = [
   {
+    company: 'Wallner Expac, Inc.',
+    roles: [
+      {
+        title: { en: 'IT Specialist', es: 'Especialista en IT' },
+        type: { en: 'Full-time', es: 'Tiempo Completo' },
+        duration: { en: 'Jul 2025 - Present · 4 mos', es: 'Jul 2025 - Presente · 4 meses' },
+        location: { en: 'California, United States · On-site', es: 'California, Estados Unidos · Presencial' },
+        description: {
+          en: 'Help organizations turn their IT infrastructure into a real competitive advantage. Beyond just keeping systems running, focus on making sure technology actually drives business growth and keeps operations secure. Manage IT infrastructure for a distributed team across multiple locations, working closely with both internal teams and external IT partners.',
+          es: 'Ayudo a las organizaciones a convertir su infraestructura de IT en una verdadera ventaja competitiva. Más allá de mantener los sistemas funcionando, me enfoco en asegurar que la tecnología impulse el crecimiento empresarial y mantenga las operaciones seguras. Gestiono la infraestructura de IT para un equipo distribuido en múltiples ubicaciones, trabajando estrechamente con equipos internos y socios externos de IT.'
+        },
+        contributions: {
+          en: [
+            'Built a better incident response process that dramatically cut down response times for security issues and recovery operations.',
+            'Conducted comprehensive analysis of current access controls and developed recommendations for faster emergency response, including improved account management and system isolation.',
+            'Collaborate directly with third-party IT vendors to ensure systems remain secure and effectively support remote workforce.',
+            'Created comprehensive documentation for all IT processes and established clear visibility for leadership into IT operations and decision-making.',
+            'Identified and resolved multiple operational bottlenecks, resulting in improved performance across the organization.',
+            'Regularly assess security gaps and advocate for access improvements needed for rapid incident response.'
+          ],
+          es: [
+            'Construí un mejor proceso de respuesta a incidentes que redujo dramáticamente los tiempos de respuesta para problemas de seguridad y operaciones de recuperación.',
+            'Realicé un análisis exhaustivo de los controles de acceso actuales y desarrollé recomendaciones para una respuesta de emergencia más rápida, incluyendo mejor gestión de cuentas y aislamiento de sistemas.',
+            'Colaboro directamente con proveedores de IT de terceros para asegurar que los sistemas permanezcan seguros y soporten efectivamente a la fuerza laboral remota.',
+            'Creé documentación completa para todos los procesos de IT y establecí visibilidad clara para el liderazgo sobre las operaciones y toma de decisiones de IT.',
+            'Identifiqué y resolví múltiples cuellos de botella operacionales, resultando en un mejor rendimiento en toda la organización.',
+            'Evalúo regularmente las brechas de seguridad y abogo por mejoras de acceso necesarias para una respuesta rápida a incidentes.'
+          ]
+        },
+      }
+    ]
+  },
+  {
     company: 'University of Arkansas',
     roles: [
       {
@@ -7,8 +40,8 @@ export const experiences = [
         type: { en: 'Part-time', es: 'Medio Tiempo' },
         duration: { en: 'Aug 2024 - May 2025 · 10 mos', es: 'Ago 2024 - May 2025 · 10 meses' },
         description: {
-          en: 'Serve as a vital link between faculty and first-year engineering students in an innovative engineering program designed to introduce fundamental engineering concepts and foster academic success.',
-          es: 'Servir como un enlace vital entre la facultad y los estudiantes de primer año de ingeniería en un programa innovador diseñado para introducir conceptos fundamentales de ingeniería y fomentar el éxito académico.'
+          en: 'Serve as a vital link between faculty and first-year engineering students in an innovative engineering program designed to introduce fundamental engineering concepts and foster academic[...]',
+          es: 'Servir como un enlace vital entre la facultad y los estudiantes de primer año de ingeniería en un programa innovador diseñado para introducir conceptos fundamentales de ingeniería y[...]'
         },
         contributions: {
           en: [
@@ -73,4 +106,4 @@ export const experiences = [
       }
     ]
   }
-]; 
+];
